@@ -31,6 +31,7 @@ public class CalcolatriceController {
         int s = cs.calcolaSomma(dto.getNumero1(), dto.getNumero2());
         CalcolatriceRispostaDto risp = new CalcolatriceRispostaDto();
         risp.setRisultato(s);
+        risp.setRighe(cs.trovaTutti());
         return risp;
     }
 }

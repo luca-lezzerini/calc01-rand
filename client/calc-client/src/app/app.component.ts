@@ -1,3 +1,4 @@
+import { RigaCalcolo } from './riga-calcolo';
 import { RichiestaDto } from './richiesta-dto';
 import { RispostaDto } from './risposta-dto';
 import { Component } from '@angular/core';
@@ -13,7 +14,7 @@ export class AppComponent {
   n1: number = 0;
   n2: number = 0;
   totale: number;
-
+  righe: RigaCalcolo[] = [];
   constructor(private http: HttpClient) { }
 
   somma() {
@@ -26,6 +27,9 @@ export class AppComponent {
         "http://localhost:8080/somma",
         r
       );
-      oss.subscribe(risp => this.totale = risp.risultato);
+      oss.subscribe(risp => {
+        this.totale = risp.risultato;
+        this.righe = risp.righe;
+      });
   }
 }
