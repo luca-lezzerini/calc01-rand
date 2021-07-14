@@ -23,9 +23,16 @@ public class CalcolatriceController {
         System.out.println("Ciao, sono il server");
     }
 
+    @RequestMapping("/test")
+    public void test() {
+        System.out.println("Siamo in test");
+        cs.test();
+    }
+
     @RequestMapping("/somma")
     @ResponseBody
     public CalcolatriceRispostaDto somma(@RequestBody CalcolatriceRichiestaDto dto) {
+        System.out.println("Service iniettato "+ cs.getClass().getName());
         System.out.println("Entrato in somma");
         System.out.println("Ricevuto dto " + dto);
         int s = cs.calcolaSomma(dto.getNumero1(), dto.getNumero2());

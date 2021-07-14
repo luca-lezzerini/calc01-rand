@@ -19,4 +19,6 @@ public interface CalcolatriceService {
      * @return una lista di righe calcolo
      */
     List<RigaCalcolo> trovaTutti();
+    
+    void test();
 }
