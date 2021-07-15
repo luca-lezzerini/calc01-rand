@@ -2,8 +2,10 @@ package it.corso.calc01.controller;
 
 import it.corso.calc01.dto.CalcolatriceRichiestaDto;
 import it.corso.calc01.dto.CalcolatriceRispostaDto;
+import it.corso.calc01.model.Classe;
+import it.corso.calc01.model.Professore;
 import it.corso.calc01.service.CalcolatriceService;
-import it.corso.calc01.service.impl.CalcolatriceServiceImpl;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +29,20 @@ public class CalcolatriceController {
     public void test() {
         System.out.println("Siamo in test");
         cs.test();
+    }
+
+    @RequestMapping("/mostra-classi")
+    @ResponseBody
+    public List<Classe> mostraClassi() {
+        System.out.println("Siamo in mostra-classi");
+        return cs.mostraClassi();
+    }
+
+    @RequestMapping("/mostra-docenti")
+    @ResponseBody
+    public List<Professore> mostraDocenti(@RequestBody Classe c) {
+        System.out.println("Siamo in mostra-docenti");
+        return cs.mostraProfessori(c);
     }
 
     @RequestMapping("/genera-classi")

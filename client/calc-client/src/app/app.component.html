@@ -16,3 +16,19 @@ Il totale è {{totale}}
     <td>{{r.risultato}}</td>
   </tr>
 </table>
+<hr>
+<button (click)="mostraClassi()">Mostra classi</button>
+<ul>
+  <li *ngFor="let c of classi">
+    {{c.codice}}
+    <button (click)="mostraDocenti(c)">Mostra docenti</button>
+  </li>
+</ul>
+
+<table>
+  <tr *ngFor="let d of docenti">
+    <td>{{d.nome}}</td>
+    <td>{{d.cognome}}</td>
+    <td>{{d.eta}}</td>
+  </tr>
+</table>

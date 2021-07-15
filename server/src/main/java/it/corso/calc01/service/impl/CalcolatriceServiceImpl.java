@@ -188,7 +188,7 @@ public class CalcolatriceServiceImpl implements CalcolatriceService {
         Long elle = a1.getId();
         va.getAlunni().removeIf(a -> a.getId().equals(elle));
         classeRepository.save(va);
-        
+
         Professore p1 = new Professore("Aristotele", "De Grecis", 30);
         p1 = professoreRepository.save(p1);
         Professore p2 = new Professore("Archimede", "Pitagorico", 20);
@@ -202,7 +202,7 @@ public class CalcolatriceServiceImpl implements CalcolatriceService {
         vb.getProfessori().add(p3);
         classeRepository.save(va);
         classeRepository.save(vb);
-        
+
         p1.getClassi().add(va);
         p1.getClassi().add(vb);
         professoreRepository.save(p1);
@@ -212,6 +212,16 @@ public class CalcolatriceServiceImpl implements CalcolatriceService {
         p3.getClassi().add(vb);
         professoreRepository.save(p3);
 
+    }
+
+    @Override
+    public List<Classe> mostraClassi() {
+        return classeRepository.findAll();
+    }
+
+    @Override
+    public List<Professore> mostraProfessori(Classe c) {
+        return professoreRepository.trovaProfPerClasse(c.getId());
     }
 
 }

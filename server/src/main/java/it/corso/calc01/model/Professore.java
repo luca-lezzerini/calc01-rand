@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 @Entity
@@ -24,6 +26,13 @@ public class Professore implements Serializable {
     private Integer eta;
 
     @ManyToMany
+    @JoinTable(
+//            name = "classi_professori",
+            joinColumns = {
+                @JoinColumn(name = "fk_prof")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "fk_classe")}
+    )
     List<Classe> classi;
 
     public Professore() {

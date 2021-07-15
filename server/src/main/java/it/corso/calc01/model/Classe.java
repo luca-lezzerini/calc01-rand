@@ -1,5 +1,7 @@
 package it.corso.calc01.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -18,11 +20,13 @@ public class Classe {
 
     @Column
     String codice;
-
     @OneToMany(mappedBy = "classe")
+//    @JsonIgnore
+    @JsonIgnoreProperties("classe")
     List<Alunno> alunni;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "classi")
+    @JsonIgnore
     List<Professore> professori;
 
     public Classe() {

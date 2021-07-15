@@ -1,5 +1,7 @@
 package it.corso.calc01.service;
 
+import it.corso.calc01.model.Classe;
+import it.corso.calc01.model.Professore;
 import it.corso.calc01.model.RigaCalcolo;
 import java.util.List;
 
@@ -25,11 +27,16 @@ public interface CalcolatriceService {
 
     /**
      * Recupera tutte le righe di calcolo nel DB
+     *
      * @return una lista di righe calcolo
      */
     List<RigaCalcolo> trovaTutti();
-    
+
     void test();
-    
+
     void generaConEreditarieta();
+
+    List<Classe> mostraClassi();
+
+    List<Professore> mostraProfessori(Classe c);
 }
