@@ -15,6 +15,15 @@ public interface CalcolatriceService {
     int calcolaSomma(int p1, int p2);
 
     /**
+     * Calcola la differenza di due numeri interi passati come parametro.
+     *
+     * @param p1 il primo numero intero minuendo
+     * @param p2 il secondo numero intero sottraendo
+     * @return la differenza dei due (intero)
+     */
+    int calcolaDifferenza(int p1, int p2);
+
+    /**
      * Recupera tutte le righe di calcolo nel DB
      * @return una lista di righe calcolo
      */

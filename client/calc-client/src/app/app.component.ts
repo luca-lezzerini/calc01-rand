@@ -32,4 +32,20 @@ export class AppComponent {
         this.righe = risp.righe;
       });
   }
+
+  sottrai() {
+    let r: RichiestaDto = new RichiestaDto();
+    r.numero1 = this.n1;
+    r.numero2 = this.n2;
+
+    let oss: Observable<RispostaDto> =
+      this.http.post<RispostaDto>(
+        "http://localhost:8080/sottrai",
+        r
+      );
+      oss.subscribe(risp => {
+        this.totale = risp.risultato;
+        this.righe = risp.righe;
+      });
+  }
 }

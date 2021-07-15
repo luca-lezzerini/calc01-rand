@@ -22,6 +22,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CalcolatriceServiceImpl implements CalcolatriceService {
@@ -45,6 +46,18 @@ public class CalcolatriceServiceImpl implements CalcolatriceService {
     public int calcolaSomma(int p1, int p2) {
         System.out.println("Siamo nel service");
         int r = p1 + p2;
+        RigaCalcolo riga = new RigaCalcolo();
+        riga.setNumero1(Double.valueOf(p1));
+        riga.setNumero2(Double.valueOf(p2));
+        riga.setRisultato(Double.valueOf(r));
+        calcolatriceRepository.save(riga);
+        return r;
+    }
+
+    @Override
+    public int calcolaDifferenza(int p1, int p2) {
+        System.out.println("Siamo nel service");
+        int r = p1 - p2;
         RigaCalcolo riga = new RigaCalcolo();
         riga.setNumero1(Double.valueOf(p1));
         riga.setNumero2(Double.valueOf(p2));
@@ -120,6 +133,7 @@ public class CalcolatriceServiceImpl implements CalcolatriceService {
     }
 
     @Override
+    @Transactional
     public void generaConEreditarieta() {
         alunnoRepository.deleteAllInBatch();
         classeRepository.deleteAllInBatch();

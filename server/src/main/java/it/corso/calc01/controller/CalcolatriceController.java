@@ -47,4 +47,16 @@ public class CalcolatriceController {
         risp.setRighe(cs.trovaTutti());
         return risp;
     }
+    @RequestMapping("/sottrai")
+    @ResponseBody
+    public CalcolatriceRispostaDto sottrai(@RequestBody CalcolatriceRichiestaDto dto) {
+        System.out.println("Service iniettato "+ cs.getClass().getName());
+        System.out.println("Entrato in sottrai");
+        System.out.println("Ricevuto dto " + dto);
+        int s = cs.calcolaDifferenza(dto.getNumero1(), dto.getNumero2());
+        CalcolatriceRispostaDto risp = new CalcolatriceRispostaDto();
+        risp.setRisultato(s);
+        risp.setRighe(cs.trovaTutti());
+        return risp;
+    }
 }
