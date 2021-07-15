@@ -21,4 +21,6 @@ public interface CalcolatriceService {
     List<RigaCalcolo> trovaTutti();
     
     void test();
+    
+    void generaConEreditarieta();
 }

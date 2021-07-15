@@ -1,11 +1,14 @@
 package it.corso.calc01.service.impl;
 
 import it.corso.calc01.model.Contatto;
+import it.corso.calc01.model.Paziente;
+import it.corso.calc01.model.Persona;
 import it.corso.calc01.model.RigaCalcolo;
 import it.corso.calc01.repository.CalcolatriceRepository;
 import it.corso.calc01.repository.ContattoRepository;
+import it.corso.calc01.repository.PazienteRepository;
+import it.corso.calc01.repository.PersonaRepository;
 import it.corso.calc01.service.CalcolatriceService;
-import java.awt.print.Pageable;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -21,6 +24,10 @@ public class CalcolatriceServiceImpl implements CalcolatriceService {
     CalcolatriceRepository calcolatriceRepository;
     @Autowired
     ContattoRepository contattoRepository;
+    @Autowired
+    PersonaRepository personaRepository;
+    @Autowired
+    PazienteRepository pazienteRepository;
 
     @Override
     public int calcolaSomma(int p1, int p2) {
@@ -97,5 +104,24 @@ public class CalcolatriceServiceImpl implements CalcolatriceService {
         var pag1 = contattoRepository.findAll(PageRequest.of(1,25));
         System.out.println(pag1.getContent());
     }
+
+    @Override
+    public void generaConEreditarieta() {
+        Persona p;
+        p = new Persona("Mario", "Rossi", 30);
+        personaRepository.save(p);
+        p = new Persona("Maria", "Bianchi", 20);
+        personaRepository.save(p);
+        p = new Persona("Luigi", "Bianchi", 40);
+        personaRepository.save(p);
+        
+        Paziente paz;
+        paz = new Paziente("12345", "Giorgia", "Rossi", 34);
+        pazienteRepository.save(paz);
+        paz = new Paziente("54321", "Elisa", "Bianchi", 74);
+        pazienteRepository.save(paz);
+    }
+    
+    
 
 }

@@ -29,6 +29,12 @@ public class CalcolatriceController {
         cs.test();
     }
 
+    @RequestMapping("/genera-classi")
+    public void generaClassi() {
+        System.out.println("Siamo in generaClassi");
+        cs.generaConEreditarieta();
+    }
+
     @RequestMapping("/somma")
     @ResponseBody
     public CalcolatriceRispostaDto somma(@RequestBody CalcolatriceRichiestaDto dto) {
