@@ -1,13 +1,19 @@
 package it.corso.calc01.service.impl;
 
+import it.corso.calc01.model.Alunno;
+import it.corso.calc01.model.Classe;
 import it.corso.calc01.model.Contatto;
 import it.corso.calc01.model.Paziente;
 import it.corso.calc01.model.Persona;
+import it.corso.calc01.model.Professore;
 import it.corso.calc01.model.RigaCalcolo;
+import it.corso.calc01.repository.AlunnoRepository;
 import it.corso.calc01.repository.CalcolatriceRepository;
+import it.corso.calc01.repository.ClasseRepository;
 import it.corso.calc01.repository.ContattoRepository;
 import it.corso.calc01.repository.PazienteRepository;
 import it.corso.calc01.repository.PersonaRepository;
+import it.corso.calc01.repository.ProfessoreRepository;
 import it.corso.calc01.service.CalcolatriceService;
 import java.time.Duration;
 import java.time.Instant;
@@ -28,6 +34,12 @@ public class CalcolatriceServiceImpl implements CalcolatriceService {
     PersonaRepository personaRepository;
     @Autowired
     PazienteRepository pazienteRepository;
+    @Autowired
+    AlunnoRepository alunnoRepository;
+    @Autowired
+    ClasseRepository classeRepository;
+    @Autowired
+    ProfessoreRepository professoreRepository;
 
     @Override
     public int calcolaSomma(int p1, int p2) {
@@ -99,14 +111,18 @@ public class CalcolatriceServiceImpl implements CalcolatriceService {
         Instant f3 = Instant.now();
         Duration d3 = Duration.between(i3, f3);
         System.out.println("Tempo di salvataggio 2.c " + d3.toMillis());
-        
+
         // usiamo la paginazione
-        var pag1 = contattoRepository.findAll(PageRequest.of(1,25));
+        var pag1 = contattoRepository.findAll(PageRequest.of(1, 25));
         System.out.println(pag1.getContent());
+
+//        contatti.stream().filter(c -> c.getEta()> 30).forEach(x -> System.out.println(x));
     }
 
     @Override
     public void generaConEreditarieta() {
+        alunnoRepository.deleteAllInBatch();
+        classeRepository.deleteAllInBatch();
         Persona p;
         p = new Persona("Mario", "Rossi", 30);
         personaRepository.save(p);
@@ -114,14 +130,74 @@ public class CalcolatriceServiceImpl implements CalcolatriceService {
         personaRepository.save(p);
         p = new Persona("Luigi", "Bianchi", 40);
         personaRepository.save(p);
-        
+
         Paziente paz;
         paz = new Paziente("12345", "Giorgia", "Rossi", 34);
         pazienteRepository.save(paz);
         paz = new Paziente("54321", "Elisa", "Bianchi", 74);
         pazienteRepository.save(paz);
+
+        Classe va  = new Classe("VA");
+        va  = classeRepository.save(va);
+        Classe vb = new Classe("VB");
+        vb = classeRepository.save(vb);
+
+        Alunno a1 = new Alunno("Ciro", "Vina", 18);
+        a1 = alunnoRepository.save(a1);
+        Alunno a2 = new Alunno("Elio", "Plutonio", 18);
+        a2 = alunnoRepository.save(a2);
+        Alunno b1 = new Alunno("Massimo", "Della Pena", 18);
+        b1 = alunnoRepository.save(b1);
+        Alunno b2 = new Alunno("Franco", "Bollo", 18);
+        b2 = alunnoRepository.save(b2);
+
+        // associo gli alunni alla classe VA
+        a1.setClasse(va);
+        alunnoRepository.save(a1);
+        a2.setClasse(va);
+        alunnoRepository.save(a2);
+        va.getAlunni().add(a1);
+        va.getAlunni().add(a2);
+        classeRepository.save(va);
+
+        // rimuovo a1 dalla VA
+        a1.setClasse(null);
+        alunnoRepository.save(a1);
+
+//         TrovatoreDiAlunno tda = new TrovatoreDiAlunno(a1.getId());
+//        Predicate<Alunno> tda = new Predicate<Alunno>() {
+//            @Override
+//            public boolean test(Alunno t) {
+//                return t.getId().equals(elle);
+//            }
+//        }
+        Long elle = a1.getId();
+        va.getAlunni().removeIf(a -> a.getId().equals(elle));
+        classeRepository.save(va);
+        
+        Professore p1 = new Professore("Aristotele", "De Grecis", 30);
+        p1 = professoreRepository.save(p1);
+        Professore p2 = new Professore("Archimede", "Pitagorico", 20);
+        p2 = professoreRepository.save(p2);
+        Professore p3 = new Professore("Albert", "Einstein", 60);
+        p3 = professoreRepository.save(p3);
+        va.getProfessori().add(p1);
+        va.getProfessori().add(p2);
+        vb.getProfessori().add(p1);
+        vb.getProfessori().add(p2);
+        vb.getProfessori().add(p3);
+        classeRepository.save(va);
+        classeRepository.save(vb);
+        
+        p1.getClassi().add(va);
+        p1.getClassi().add(vb);
+        professoreRepository.save(p1);
+        p2.getClassi().add(va);
+        p2.getClassi().add(vb);
+        professoreRepository.save(p2);
+        p3.getClassi().add(vb);
+        professoreRepository.save(p3);
+
     }
-    
-    
 
 }
