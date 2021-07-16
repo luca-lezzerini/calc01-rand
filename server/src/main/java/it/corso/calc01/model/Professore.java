@@ -27,7 +27,7 @@ public class Professore implements Serializable {
 
     @ManyToMany
     @JoinTable(
-//            name = "classi_professori",
+            //            name = "classi_professori",
             joinColumns = {
                 @JoinColumn(name = "fk_prof")},
             inverseJoinColumns = {
@@ -78,7 +78,11 @@ public class Professore implements Serializable {
 
     public List<Classe> getClassi() {
         // non cambia classi!!!
-        return (classi == null ? new ArrayList<>() : classi);
+//        return (classi == null ? new ArrayList<>() : classi);
+        if (classi == null) {
+            classi = new ArrayList<>();
+        }
+        return classi;
     }
 
     public void setClassi(List<Classe> classi) {
